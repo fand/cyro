@@ -1,27 +1,6 @@
-/** @jsx hJSX */
-
 import Cycle from '@cycle/core';
-import { makeDOMDriver, hJSX } from '@cycle/dom';
-
-const renderBPMSlider = (bpm) => {
-  return (
-    <div>
-      <input
-        id="bpm"
-        type="range"
-        min="100"
-        max="250"
-        value={bpm} />
-      <p>BPM : {bpm}</p>
-    </div>
-  );
-};
-
-const view = (state$) => {
-  return state$.map(({ bpm }) =>
-    renderBPMSlider(bpm)
-  );
-};
+import { makeDOMDriver } from '@cycle/dom';
+import views from './views';
 
 const model = (actions) => {
   return Cycle.Rx.Observable.combineLatest(
@@ -43,7 +22,7 @@ const main = function ({ DOM }) {
   const state$  = model(actions);
 
   return {
-    DOM : view(state$),
+    DOM : views(state$),
   };
 };
 
