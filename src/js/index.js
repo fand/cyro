@@ -3,8 +3,22 @@
 import Cycle from '@cycle/core';
 import { makeDOMDriver, hJSX } from '@cycle/dom';
 
-const main = function (drivers) {
-  const changeBPM$ = drivers.DOM.select('#bpm').events('input').map(ev => ev.target.value).startWith(144);
+const renderBPMSlider = (bpm) => {
+  return (
+    <div>
+      <input
+        id="bpm"
+        type="range"
+        min="100"
+        max="250"
+        value={bpm} />
+      <p>BPM : {bpm}</p>
+    </div>
+  );
+};
+
+const main = function ({ DOM }) {
+  const changeBPM$ = DOM.select('#bpm').events('input').map(ev => ev.target.value).startWith(144);
   const state$ = Cycle.Rx.Observable.combineLatest(
     changeBPM$.startWith(144),
     (bpm) => {
@@ -16,15 +30,7 @@ const main = function (drivers) {
 
   return {
     DOM : state$.map(({ bpm }) =>
-      <div>
-        <input
-          id="bpm"
-          type="range"
-          min="100"
-          max="250"
-          value={bpm} />
-        <p>BPM : {bpm}</p>
-      </div>
+      renderBPMSlider(bpm)
     ),
   };
 };
