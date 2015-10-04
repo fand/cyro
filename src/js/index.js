@@ -4,14 +4,19 @@ import Cycle from '@cycle/core';
 import { makeDOMDriver, hJSX } from '@cycle/dom';
 
 const main = function (drivers) {
+  const changeBPM$ = drivers.DOM.select('#bpm').events('input').map(ev => ev.target.value).startWith(144);
+
   return {
-    DOM: drivers.DOM.select('input').events('click')
-      .map(ev => ev.target.checked)
-      .startWith(false)
-      .map(toggled =>
+    DOM: changeBPM$
+      .map(bpm =>
         <div>
-          <input type="checkbox" /> Toggle me
-          <p>{toggled ? 'ON' : 'OFF'}</p>
+          <input
+            id="bpm"
+            type="range"
+            min="100"
+            max="250"
+            value={bpm} />
+          <p>BPM : {bpm}</p>
         </div>
       ),
   };
