@@ -17,6 +17,12 @@ const renderBPMSlider = (bpm) => {
   );
 };
 
+const view = (state$) => {
+  return state$.map(({ bpm }) =>
+    renderBPMSlider(bpm)
+  );
+};
+
 const main = function ({ DOM }) {
   const changeBPM$ = DOM.select('#bpm').events('input').map(ev => ev.target.value).startWith(144);
   const state$ = Cycle.Rx.Observable.combineLatest(
@@ -29,9 +35,7 @@ const main = function ({ DOM }) {
   );
 
   return {
-    DOM : state$.map(({ bpm }) =>
-      renderBPMSlider(bpm)
-    ),
+    DOM : view(state$),
   };
 };
 
