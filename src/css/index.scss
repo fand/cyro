@@ -1,3 +1,25 @@
 * {
     color : red;
 }
+
+
+.Cyro {
+    &__Pad {
+        animation: cyro;
+    }
+}
+
+
+.stylie {
+  animation-name: stylie-transform-keyframes;
+  animation-duration: 1000ms;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+  transform-origin: 0 0;
+}
+
+@keyframes cyro {
+  0%   { left:    0; }
+  100% { left: 100%; }
+}
