@@ -23,9 +23,9 @@ const view = (state$) => {
   );
 };
 
-const model = (changeBPM$) => {
+const model = (actions) => {
   return Cycle.Rx.Observable.combineLatest(
-    changeBPM$.startWith(144),
+    actions.changeBPM$.startWith(144),
     (bpm) => {
       return {
         bpm,
@@ -34,9 +34,13 @@ const model = (changeBPM$) => {
   );
 };
 
+const intent = (DOM) => ({
+  changeBPM$ : DOM.select('#bpm').events('input').map(ev => ev.target.value).startWith(144),
+});
+
 const main = function ({ DOM }) {
-  const changeBPM$ = DOM.select('#bpm').events('input').map(ev => ev.target.value).startWith(144);
-  const state$ = model(changeBPM$);
+  const actions = intent(DOM);
+  const state$  = model(actions);
 
   return {
     DOM : view(state$),
