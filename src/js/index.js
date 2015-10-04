@@ -1,5 +1,6 @@
 import Cycle from '@cycle/core';
 import { makeDOMDriver } from '@cycle/dom';
+import intents from './intents';
 import views from './views';
 
 const model = (actions) => {
@@ -13,12 +14,8 @@ const model = (actions) => {
   );
 };
 
-const intent = (DOM) => ({
-  changeBPM$ : DOM.select('#bpm').events('input').map(ev => ev.target.value).startWith(144),
-});
-
 const main = function ({ DOM }) {
-  const actions = intent(DOM);
+  const actions = intents(DOM);
   const state$  = model(actions);
 
   return {
