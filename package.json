@@ -1,0 +1,32 @@
+{
+  "name": "cyro",
+  "version": "0.0.1",
+  "description": "A sequencer on cycle.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "http-server public",
+    "clean": "rm -rf public/js public/css && mkdir public/js public/css",
+    "build": "npm run clean && npm run build-js && npm run build-css",
+    "build-js": "$(npm bin)/browserify -t [ babelify --stage 0 ] src/js/index.js -o public/js/index.js",
+    "build-css": "$(npm bin)/node-sass -r src/css/index.scss public/css/index.css",
+    "watch": "npm run clean && npm run watch-js & npm run watch-css & npm run serve",
+    "watch-js": "$(npm bin)/watchify -t [ babelify --stage 0 ] src/js/index.js -o public/js/index.js",
+    "watch-css": "npm run build-css && $(npm bin)/node-sass -w -r src/css/index.scss public/css/index.css"
+  },
+  "author": "fand",
+  "license": "MIT",
+  "dependencies": {
+    "@cycle/core": "^3.1.0",
+    "@cycle/dom": "^5.3.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^4.1.3",
+    "babelify": "^6.3.0",
+    "browserify": "^11.2.0",
+    "eslint": "^1.6.0",
+    "eslint-plugin-react": "^3.5.1",
+    "node-sass": "^3.3.3",
+    "watchify": "^3.4.0"
+  }
+}
