@@ -23,9 +23,8 @@ const view = (state$) => {
   );
 };
 
-const main = function ({ DOM }) {
-  const changeBPM$ = DOM.select('#bpm').events('input').map(ev => ev.target.value).startWith(144);
-  const state$ = Cycle.Rx.Observable.combineLatest(
+const model = (changeBPM$) => {
+  return Cycle.Rx.Observable.combineLatest(
     changeBPM$.startWith(144),
     (bpm) => {
       return {
@@ -33,6 +32,11 @@ const main = function ({ DOM }) {
       };
     }
   );
+};
+
+const main = function ({ DOM }) {
+  const changeBPM$ = DOM.select('#bpm').events('input').map(ev => ev.target.value).startWith(144);
+  const state$ = model(changeBPM$);
 
   return {
     DOM : view(state$),
