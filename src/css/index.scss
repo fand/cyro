@@ -1,22 +1,45 @@
 * {
-    color : red;
+  margin  : 0;
+  padding : 0;
 }
 
+.BPMSlider {
+  position   : fixed;
+  width      : 90%;
+  height     : 120px;
+  top        : 50%;
+  left       : 5%;
+  margin-top : -60px;
+  background : black;
+  opacity    : 0.9;
+
+  &__Input {
+    position    : absolute;
+    left        : 100px;
+    width       : calc(100% - 100px);
+    height      : 100%;
+    font-weight : bold;
+  }
+
+  &__Label {
+    position       : absolute;
+    left           : 0;
+    width          : 100px;
+    height         : 100%;
+    line-height    : 120px;
+    vertical-align : middle;
+    color          : white;
+  }
+}
 
 .Cyro {
-    &__Pad {
-        animation: cyro;
-    }
-}
-
-
-.stylie {
-  animation-name: stylie-transform-keyframes;
-  animation-duration: 1000ms;
-  animation-fill-mode: forwards;
-  animation-timing-function: linear;
-  animation-iteration-count: 1;
-  transform-origin: 0 0;
+  &__Pad {
+    diplay     : block;
+    position   : fixed;
+    width      : 1%;
+    height     : 10%;
+    background : black;
+  }
 }
 
 @keyframes cyro {
