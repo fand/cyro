@@ -7,7 +7,7 @@ import cyro from './cyro';
 export default function views (state$) {
   return state$.map((state) =>
     <div>
-      {cyro(state.css)}
+      {cyro(state)}
       {bpmSlider(state.bpm)}
     </div>
   );
