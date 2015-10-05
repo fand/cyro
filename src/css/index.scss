@@ -33,16 +33,19 @@
 }
 
 .Cyro {
+  width : 100%;
   &__Pad {
-    diplay     : block;
-    position   : fixed;
-    width      : 1%;
-    height     : 10%;
-    background : black;
+    diplay       : block;
+    position     : fixed;
+    left         : 0;
+    width        : 5px;
+    height       : 10%;
+    background   : black;
+    transform-origin: 50%;
   }
 }
 
 @keyframes cyro {
-  0%   { left:    0; }
-  100% { left: 100%; }
+  0%   { left :   0%; }
+  100% { left : 100%; }
 }

@@ -7,14 +7,18 @@ import { hJSX } from '@cycle/dom';
  */
 export default function renderBPMSlider (bpm) {
   return (
-    <div>
+    <div className="BPMSlider">
       <input
+        className="BPMSlider__Input"
         id="bpm"
         type="range"
         min="100"
         max="250"
         value={bpm} />
-      <p>BPM : {bpm}</p>
+      <p
+        className="BPMSlider__Label">
+        BPM {bpm}
+      </p>
     </div>
   );
 }
