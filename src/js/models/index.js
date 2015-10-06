@@ -30,27 +30,19 @@ const timerModel = (actions) => {
     (loop, interval) => (interval)
   );
 
-  // loop毎に4つ打ちを生成
-  const beat$ = intervalForLoop$.flatMap((interval) =>
-    Rx.Observable.interval(interval / 4).take(4)
-  );
+  const timestamp$ = loop$.map(() => performance.now());
 
-  // 64分音符
-  const tick$ = intervalForLoop$.flatMap((interval) =>
-    Rx.Observable.interval(interval / 64).take(4)
+  const stateForLoop$ = loop$.flatMap(() =>
+    Rx.Observable.combineLatest(
+      interval$,
+      timestamp$,
+    )
   );
-
-  const dx$ = intervalForLoop$.map(interval => {
-    const frames = interval / 16;
-    return 1000 / frames;
-  });
 
   return {
     interval$,
-    loop$,
-    beat$,
-    tick$,
-    dx$,
+    intervalForLoop$,
+    stateForLoop$,
   };
 
 };
@@ -58,14 +50,14 @@ const timerModel = (actions) => {
 export default function models (actions) {
 
   const timerModel$ = timerModel(actions);
-  // timerModel$.beat$.subscribe(() => console.log('>>>>, ', Date.now()));
+
   return Cycle.Rx.Observable.combineLatest(
     actions.changeBPM$.startWith(144),
-    timerModel$.dx$.startWith(0),
-    (bpm, dx) => {
+    timerModel$.stateForLoop$,
+    (bpm, cyro) => {
       return {
         bpm,
-        dx,
+        cyro,
       };
     }
   );
