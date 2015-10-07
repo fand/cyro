@@ -24,12 +24,6 @@ const cyroModel = (actions) => {
     return Rx.Observable.fromEvent(eventEmitter, 'loop').startWith(1);
   })();
 
-  // loopの頭にintervalを生成
-  const intervalForLoop$ = loop$.withLatestFrom(
-    interval$,
-    (loop, interval) => (interval)
-  );
-
   const timestamp$ = loop$.map(() => performance.now());
 
   const intervalAndTimestamp$ = Rx.Observable.combineLatest(
