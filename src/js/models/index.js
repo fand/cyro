@@ -44,16 +44,16 @@ const cyroModel = (actions) => {
 
   const notes$ = note$.scan((prev, note) => prev.concat(note));
 
-  const stateForLoop$ = loop$.flatMap(() =>
-    Rx.Observable.combineLatest(
-      intervalAndTimestamp$,
-      notes$,
-      ([interval, startTime], notes) => ({
-        interval, startTime, notes,
-      })
-    ),
+  const notesAndLoop$ = Rx.Observable.combineLatest(notes$, loop$);
+
+  const stateForLoop$ = notesAndLoop$.withLatestFrom(
+    intervalAndTimestamp$,
+    ([notes], [interval, startTime]) => ({
+      notes, interval, startTime,
+    })
   );
 
+  stateForLoop$.subscribe(s => console.log(s.notes.length));
   return stateForLoop$;
 };
 
