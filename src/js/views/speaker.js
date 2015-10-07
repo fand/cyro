@@ -63,8 +63,8 @@ const play = (timestamp) => {
     const offset = state.offsets[i] / 64 * state.interval;
     const diff = t - offset;
 
-    if (0 < diff && diff < 60) {
-      kick.play(diff);
+    if (0 < diff && diff < 100) {
+      kick.play(diff / 1000);
       state.played[i] = true;
     }
   }
