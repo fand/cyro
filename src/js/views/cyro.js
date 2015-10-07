@@ -1,5 +1,7 @@
 /** @jsx hJSX */
 
+import { hJSX } from '@cycle/dom';
+
 const W = 1000;
 const H = 1000;
 
@@ -35,7 +37,10 @@ const draw = (timestamp) => {
 
 requestAnimationFrame(draw);
 
-export default function cyro ([interval, startTime]) {
+export default function cyro ({ interval, startTime, notes }) {
   state.interval  = interval;
   state.startTime = startTime;
+  state.offsets   = notes;
+
+  return <div className="Clicker">count : {notes.length}</div>;
 }

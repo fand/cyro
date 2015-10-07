@@ -4,7 +4,7 @@ import { EventEmitter } from 'events';
 
 const bpmToInterval = bpm => (60000 / bpm) * 4;
 
-const timerModel = (actions) => {
+const cyroModel = (actions) => {
 
   const interval$ = actions.changeBPM$.map(bpmToInterval);
 
@@ -32,33 +32,40 @@ const timerModel = (actions) => {
 
   const timestamp$ = loop$.map(() => performance.now());
 
-  const stateForLoop$ = loop$.flatMap(() =>
-    Rx.Observable.combineLatest(
-      interval$,
-      timestamp$,
-    )
+  const intervalAndTimestamp$ = Rx.Observable.combineLatest(
+    interval$,
+    timestamp$,
   );
 
-  return {
-    interval$,
-    intervalForLoop$,
-    stateForLoop$,
-  };
+  const note$ = actions.addNote$
+    .withLatestFrom(intervalAndTimestamp$, (e, [interval, timestamp]) => {
+      return ((performance.now() - timestamp) / interval * 64) | 0;
+    }).startWith([0, 16, 32, 48]);
 
+  const notes$ = note$.scan((prev, note) => prev.concat(note));
+
+  const stateForLoop$ = loop$.flatMap(() =>
+    Rx.Observable.combineLatest(
+      intervalAndTimestamp$,
+      notes$,
+      ([interval, startTime], notes) => ({
+        interval, startTime, notes,
+      })
+    ),
+  );
+
+  return stateForLoop$;
 };
 
 export default function models (actions) {
 
-  const timerModel$ = timerModel(actions);
+  const cyroState$ = cyroModel(actions);
 
   return Cycle.Rx.Observable.combineLatest(
     actions.changeBPM$.startWith(144),
-    timerModel$.stateForLoop$,
+    cyroState$,
     (bpm, cyro) => {
-      return {
-        bpm,
-        cyro,
-      };
+      return { bpm, cyro };
     }
   );
 }
