@@ -45,7 +45,7 @@ const cyroModel = (actions) => {
         key,
         ((performance.now() - timestamp) / interval * 64) | 0,
       ];
-    });
+    }).startWith([]);
 
   const snares$ = snare$.scan((prev, [key, pos]) => {
     return {
