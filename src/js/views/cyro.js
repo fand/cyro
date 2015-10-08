@@ -14,7 +14,8 @@ document.body.appendChild(canvas);
 const ctx = canvas.getContext('2d');
 
 const state = {
-  offsets : [0, 16, 32, 48],
+  offsets   : [0, 16, 32, 48],
+  snares    : [],
   startTime : performance.now(),
   interval  : 1000,
 };
@@ -32,15 +33,22 @@ const draw = (timestamp) => {
     ctx.fillRect(x + offset + W - 10, 0, 10, 100);
   }
 
+  for (let i = 0; i < state.snares.length; i++) {
+    const offset = -state.snares[i] / 64 * W;
+    ctx.fillRect(x + offset, 200, 10, 100);
+    ctx.fillRect(x + offset + W - 10, 200, 10, 100);
+  }
+
   requestAnimationFrame(draw);
 };
 
 requestAnimationFrame(draw);
 
-export default function cyro ({ interval, startTime, notes }) {
+export default function cyro ({ interval, startTime, notes, snares }) {
   state.interval  = interval;
   state.startTime = startTime;
   state.offsets   = notes;
+  state.snares    = snares;
 
   return <div className="Clicker">count : {notes.length}</div>;
 }

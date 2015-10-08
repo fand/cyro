@@ -39,14 +39,23 @@ const cyroModel = (actions) => {
 
   const notesAndLoop$ = Rx.Observable.combineLatest(notes$, loop$);
 
+  const snare$ = actions.addSnare$
+    .withLatestFrom(intervalAndTimestamp$, (e, [interval, timestamp]) => {
+      return ((performance.now() - timestamp) / interval * 64) | 0;
+    }).startWith([]);
+
+  const snares$ = snare$.scan((prev, note) => prev.concat(note));
+
   const stateForLoop$ = notesAndLoop$.withLatestFrom(
     intervalAndTimestamp$,
-    ([notes], [interval, startTime]) => ({
-      notes, interval, startTime,
+    snares$,
+    ([notes], [interval, startTime], snares) => ({
+      notes, interval, startTime, snares,
     })
   );
 
-  stateForLoop$.subscribe(s => console.log(s.notes.length));
+  // stateForLoop$.subscribe(s => console.log(s.notes.length));
+
   return stateForLoop$;
 };
 
