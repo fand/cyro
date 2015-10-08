@@ -3,7 +3,6 @@ import Sample from '../entities/Sample';
 const kick = new Sample('./wav/kick.wav');
 
 const state = {
-  offsets   : [],
   snares    : {},
   startTime : performance.now(),
   interval  : 1000,
@@ -33,10 +32,9 @@ const play = (timestamp) => {
 };
 requestAnimationFrame(play);
 
-export default function speaker ({ interval, startTime, notes, snares }) {
+export default function speaker ({ interval, startTime, snares }) {
   state.interval  = interval;
   state.startTime = startTime;
-  state.offsets   = notes;
   state.snares    = snares;
 
   state.played = {};

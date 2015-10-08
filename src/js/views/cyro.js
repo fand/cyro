@@ -14,7 +14,6 @@ document.body.appendChild(canvas);
 const ctx = canvas.getContext('2d');
 
 const state = {
-  offsets   : [0, 16, 32, 48],
   snares    : {},
   startTime : performance.now(),
   interval  : 1000,
@@ -40,11 +39,10 @@ const draw = (timestamp) => {
 
 requestAnimationFrame(draw);
 
-export default function cyro ({ interval, startTime, notes, snares }) {
+export default function cyro ({ interval, startTime, snares }) {
   state.interval  = interval;
   state.startTime = startTime;
-  state.offsets   = notes;
   state.snares    = snares;
 
-  return <div className="Clicker">count : {notes.length}</div>;
+  // return <div className="Clicker">count : {notes.length}</div>;
 }
