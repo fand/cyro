@@ -15,7 +15,7 @@ const ctx = canvas.getContext('2d');
 
 const state = {
   offsets   : [0, 16, 32, 48],
-  snares    : [],
+  snares    : {},
   startTime : performance.now(),
   interval  : 1000,
 };
@@ -27,17 +27,13 @@ const draw = (timestamp) => {
   ctx.clearRect(0, 0, W, H);
   ctx.fillStyle = '#000000';
 
-  for (let i = 0; i < state.offsets.length; i++) {
-    const offset = -state.offsets[i] / 64 * W;
-    ctx.fillRect(x + offset, 0, 10, 100);
-    ctx.fillRect(x + offset + W - 10, 0, 10, 100);
-  }
-
-  for (let i = 0; i < state.snares.length; i++) {
-    const offset = -state.snares[i] / 64 * W;
-    ctx.fillRect(x + offset, 200, 10, 100);
-    ctx.fillRect(x + offset + W - 10, 200, 10, 100);
-  }
+  Object.keys(state.snares).forEach((key, j) => {
+    for (let i = 0; i < state.snares[key].length; i++) {
+      const offset = -state.snares[key][i] / 64 * W;
+      ctx.fillRect(x + offset, j * 200, 10, 100);
+      ctx.fillRect(x + offset + W - 10, j * 200, 10, 100);
+    }
+  });
 
   requestAnimationFrame(draw);
 };
