@@ -10,7 +10,7 @@ export default function views (state$) {
     <div>
       {cyro(state.cyro)}
       {speaker(state.cyro)}
-      {bpmSlider(state.bpm)}
+      {bpmSlider(state.slider)}
     </div>
   );
 }

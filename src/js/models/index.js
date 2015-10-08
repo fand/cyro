@@ -1,15 +1,16 @@
 import { Rx } from '@cycle/core';
 import cyroModel from './cyroModel';
+import sliderModel from './sliderModel';
 
 export default function models (actions) {
-
-  const cyroState$ = cyroModel(actions);
+  const cyroState$   = cyroModel(actions);
+  const sliderState$ = sliderModel(actions);
 
   return Rx.Observable.combineLatest(
-    actions.changeBPM$.startWith(144),
+    sliderState$,
     cyroState$,
-    (bpm, cyro) => {
-      return { bpm, cyro };
+    (slider, cyro) => {
+      return { slider, cyro };
     }
   );
 }

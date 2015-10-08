@@ -5,7 +5,7 @@ const bpmToInterval = bpm => (60000 / bpm) * 4;
 
 const cyroModel = (actions) => {
 
-  const interval$ = actions.changeBPM$.map(bpmToInterval);
+  const interval$ = actions.changeBPM$.map(bpmToInterval).startWith(bpmToInterval(144));
 
   const loop$ = (() => {
     let currentInterval;

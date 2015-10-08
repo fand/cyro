@@ -14,6 +14,8 @@
   opacity    : 0.9;
   z-index    : 10;
 
+  &--hidden { display: none; }
+
   &__Input {
     position    : absolute;
     left        : 100px;
