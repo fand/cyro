@@ -1,7 +1,5 @@
 /** @jsx hJSX */
 
-import { hJSX } from '@cycle/dom';
-
 const W = 1000;
 const H = 1000;
 
