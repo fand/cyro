@@ -1,7 +1,5 @@
 import Sample from '../entities/Sample';
 
-const kick = new Sample('./wav/kick.wav');
-
 const keys = ['Z', 'X', 'C', 'V', 'B', 'N'];
 const sounds = {};
 keys.forEach((key) => {
@@ -9,7 +7,7 @@ keys.forEach((key) => {
 });
 
 const state = {
-  snares    : {},
+  notes    : {},
   startTime : performance.now(),
   interval  : 1000,
   played    : {},
@@ -18,14 +16,14 @@ const state = {
 const play = (timestamp) => {
   const t = timestamp - state.startTime;
 
-  Object.keys(state.snares).forEach((key, j) => {
+  Object.keys(state.notes).forEach((key, j) => {
     const sample = sounds[key];
     if (!sample) { return; }
 
-    for (let i = 0; i < state.snares[key].length; i++) {
+    for (let i = 0; i < state.notes[key].length; i++) {
 
       if (state.played[key][i]) { continue; }
-      const offset = state.snares[key][i] / 64 * state.interval;
+      const offset = state.notes[key][i] / 64 * state.interval;
       const diff = t - offset;
 
       if (0 < diff && diff < 100) {
@@ -41,13 +39,13 @@ const play = (timestamp) => {
 };
 requestAnimationFrame(play);
 
-export default function speaker ({ interval, startTime, snares }) {
+export default function speaker ({ interval, startTime, notes }) {
   state.interval  = interval;
   state.startTime = startTime;
-  state.snares    = snares;
+  state.notes     = notes;
 
   state.played = {};
-  Object.keys(snares).forEach((k) => {
+  Object.keys(notes).forEach((k) => {
     state.played[k] = [];
   });
 }

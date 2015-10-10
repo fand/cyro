@@ -5,6 +5,6 @@ export default function intent (DOM) {
   return {
     changeBPM$    : DOM.select('#bpm').events('input').map(ev => +ev.target.value),
     toggleSlider$ : key$.filter(k => k === '/'),
-    addSnare$     : key$.filter(k => /[A-Z]/.test(k)),
+    addNote$      : key$.filter(k => /[A-Z]/.test(k)),
   };
 }
