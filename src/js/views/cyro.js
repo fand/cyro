@@ -41,10 +41,10 @@ const draw = (timestamp) => {
 
 requestAnimationFrame(draw);
 
-export default function cyro ({ interval, startTime, notes }) {
+const cyro = ({ interval, startTime, notes }) => {
   state.interval  = interval;
   state.startTime = startTime;
   state.notes     = notes;
+};
 
-  // return <div className="Clicker">count : {notes.length}</div>;
-}
+export default cyro;
