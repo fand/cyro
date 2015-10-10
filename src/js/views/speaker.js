@@ -20,6 +20,7 @@ const play = (timestamp) => {
 
   Object.keys(state.snares).forEach((key, j) => {
     const sample = sounds[key];
+    if (!sample) { return; }
 
     for (let i = 0; i < state.snares[key].length; i++) {
 
