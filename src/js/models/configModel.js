@@ -1,6 +1,6 @@
 import { Rx } from '@cycle/core';
 
-const sliderModel = (actions) => {
+const configModel = (actions) => {
   const bpm$       = actions.changeBPM$.startWith(144);
   const isVisible$ = actions.toggleSlider$.startWith(true).scan(p => !p);
 
@@ -11,4 +11,4 @@ const sliderModel = (actions) => {
   );
 };
 
-export default sliderModel;
+export default configModel;

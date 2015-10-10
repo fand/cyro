@@ -3,11 +3,16 @@
 import { hJSX }  from '@cycle/dom';
 import bpmSlider from './bpmSlider';
 
-const config = (state) => {
-  const suffix = state.slider.isVisible ? '' : '--hidden';
+/**
+ * @param {boolean} isVisible
+ * @param {number}  bpm
+ */
+const config = ({ isVisible, bpm }) => {
+  const suffix = isVisible ? '' : '--hidden';
+
   return (
     <div className={`Config${suffix}`}>
-      {bpmSlider(state.slider)}
+      {bpmSlider(bpm)}
     </div>
   );
 };

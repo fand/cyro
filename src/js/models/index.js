@@ -1,16 +1,16 @@
-import { Rx } from '@cycle/core';
-import cyroModel from './cyroModel';
-import sliderModel from './sliderModel';
+import { Rx }      from '@cycle/core';
+import cyroModel   from './cyroModel';
+import configModel from './configModel';
 
 export default function models (actions) {
   const cyroState$   = cyroModel(actions);
-  const sliderState$ = sliderModel(actions);
+  const configState$ = configModel(actions);
 
   return Rx.Observable.combineLatest(
     sliderState$,
-    cyroState$,
-    (slider, cyro) => {
-      return { slider, cyro };
+    configState$,
+    (config, cyro) => {
+      return { config, cyro };
     }
   );
 }

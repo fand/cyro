@@ -5,11 +5,10 @@ import { hJSX } from '@cycle/dom';
 /**
  * @param {number} bpm
  */
-export default function renderBPMSlider ({ bpm, isVisible }) {
-  const suffix = isVisible ? '' : '--hidden';
+export default function renderBPMSlider (bpm) {
 
   return (
-    <div className={`BPMSlider${suffix}`}>
+    <div className="BPMSlider">
       <input
         className="BPMSlider__Input"
         id="bpm"

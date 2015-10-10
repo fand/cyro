@@ -10,7 +10,7 @@ export default function views (state$) {
     <div>
       {cyro(state.cyro)}
       {speaker(state.cyro)}
-      {config(state)}
+      {config(state.config)}
     </div>
   );
 }
