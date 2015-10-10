@@ -2,6 +2,12 @@ import Sample from '../entities/Sample';
 
 const kick = new Sample('./wav/kick.wav');
 
+const keys = ['Z', 'X', 'C', 'V', 'B', 'N'];
+const sounds = {};
+keys.forEach((key) => {
+  sounds[key] = new Sample(`./wav/${key}.wav`);
+});
+
 const state = {
   snares    : {},
   startTime : performance.now(),
@@ -13,6 +19,8 @@ const play = (timestamp) => {
   const t = timestamp - state.startTime;
 
   Object.keys(state.snares).forEach((key, j) => {
+    const sample = sounds[key];
+
     for (let i = 0; i < state.snares[key].length; i++) {
 
       if (state.played[key][i]) { continue; }
@@ -20,7 +28,7 @@ const play = (timestamp) => {
       const diff = t - offset;
 
       if (0 < diff && diff < 100) {
-        kick.play(diff / 1000);
+        sample.play(diff / 1000);
         state.played[key][i] = true;
       }
 
