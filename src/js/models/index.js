@@ -7,8 +7,8 @@ export default function models (actions) {
   const configState$ = configModel(actions);
 
   return Rx.Observable.combineLatest(
-    sliderState$,
     configState$,
+    cyroState$,
     (config, cyro) => {
       return { config, cyro };
     }
