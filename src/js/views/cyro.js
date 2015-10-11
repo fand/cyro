@@ -39,7 +39,7 @@ const draw = (timestamp) => {
 
 requestAnimationFrame(draw);
 
-const cyro = ({ interval, startTime, notes }) => {
+const cyro = ({ interval, startTime, notes, loops }) => {
   state.interval  = interval;
   state.startTime = startTime;
   state.notes     = notes;
