@@ -22,7 +22,7 @@ const configIntents = (DOM) => {
 };
 
 const noteIntents = () => {
-  const requestAddNote$ = keydown$.filter(k => /[A-Z]/.test(k));
+  const requestAddNote$ = keydown$.filter(k => /^[A-Z]$/.test(k));
 
   const shiftOn$  = keydown$.filter(k => k === 'Shift').map(true);
   const shiftOff$ = keyup$.filter(k => k === 'Shift').map(false);
