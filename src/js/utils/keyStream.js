@@ -5,6 +5,7 @@ const KEYMAP = {
   8   : 'BackSpace',
   9   : 'Tab',
   13  : 'Return',
+  16  : 'Shift',
   27  : 'Esc',
   32  : 'Space',
   33  : 'PageUp',
@@ -76,6 +77,14 @@ window.addEventListener('keydown', (e) => {
   emitter.emit('keydown', KEYMAP[e.keyCode]);
 });
 
-const key$ = Rx.Observable.fromEvent(emitter, 'keydown');
+window.addEventListener('keyup', (e) => {
+  emitter.emit('keyup', KEYMAP[e.keyCode]);
+});
 
-export default key$;
+const keydown$ = Rx.Observable.fromEvent(emitter, 'keydown');
+const keyup$   = Rx.Observable.fromEvent(emitter, 'keyup');
+
+export default {
+  keydown$,
+  keyup$,
+};
