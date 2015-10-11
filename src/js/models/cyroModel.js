@@ -1,6 +1,8 @@
 import { Rx } from '@cycle/core';
 import { EventEmitter } from 'events';
 
+const TICK_PER_BAR = 64;
+
 const bpmToInterval = bpm => (60000 / bpm) * 4;
 
 const cyroModel = (actions) => {
@@ -9,21 +11,29 @@ const cyroModel = (actions) => {
 
   const loop$ = (() => {
     let currentInterval;
+    let loopIndex = 0;
+    let loopCount = 1;
+
     const eventEmitter = new EventEmitter();
     const looper = () => {
-      eventEmitter.emit('loop', 1);
+      eventEmitter.emit('loop', loopIndex++ % loopCount);
       setTimeout(looper, currentInterval);
     };
+    looper();
 
     interval$.subscribe((interval) => {
       currentInterval = interval;
     });
-    looper();
+    actions.setLoopCount$.subscribe(l => {
+      loopCount = l;
+      loopIndex = 0;
+    });
 
     return Rx.Observable.fromEvent(eventEmitter, 'loop').startWith(1);
   })();
 
-  const timestamp$ = loop$.map(() => performance.now());
+  // Set timestamp only on loop start
+  const timestamp$ = loop$.filter(x => x === 0).map(::performance.now);
 
   const intervalAndTimestamp$ = Rx.Observable.combineLatest(
     interval$,
@@ -49,8 +59,9 @@ const cyroModel = (actions) => {
 
   const stateForLoop$ = notesAndLoop$.withLatestFrom(
     intervalAndTimestamp$,
-    ([notes], [interval, startTime]) => ({
-      notes, interval, startTime,
+    actions.setLoopCount$,
+    ([notes], [interval, startTime], loops) => ({
+      notes, interval, startTime, loops
     })
   );
 

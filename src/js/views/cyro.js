@@ -1,7 +1,5 @@
 /** @jsx hJSX */
 
-import { hJSX } from '@cycle/dom';
-
 const W = 1000;
 const H = 1000;
 
@@ -17,6 +15,7 @@ const state = {
   notes     : {},
   startTime : performance.now(),
   interval  : 1000,
+  loops     : 1,
 };
 
 const draw = (timestamp) => {
@@ -32,7 +31,7 @@ const draw = (timestamp) => {
     for (let i = 0; i < state.notes[key].length; i++) {
       const offset = -state.notes[key][i] / 64 * W;
       ctx.fillRect(x + offset + n, j * 200, 20, 200);
-      ctx.fillRect(x + offset + n + W - 10, j * 200, 20, 200);
+      ctx.fillRect(x + offset + n + W * state.loops - 10, j * 200, 20, 200);
     }
   });
 
@@ -41,10 +40,11 @@ const draw = (timestamp) => {
 
 requestAnimationFrame(draw);
 
-export default function cyro ({ interval, startTime, notes }) {
+const cyro = ({ interval, startTime, notes, loops }) => {
   state.interval  = interval;
   state.startTime = startTime;
   state.notes     = notes;
+  state.loops     = loops;
+};
 
-  // return <div className="Clicker">count : {notes.length}</div>;
-}
+export default cyro;

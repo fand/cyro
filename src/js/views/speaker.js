@@ -7,7 +7,7 @@ keys.forEach((key) => {
 });
 
 const state = {
-  notes    : {},
+  notes     : {},
   startTime : performance.now(),
   interval  : 1000,
   played    : {},
@@ -24,7 +24,7 @@ const play = (timestamp) => {
 
       if (state.played[key][i]) { continue; }
       const offset = state.notes[key][i] / 64 * state.interval;
-      const diff = t - offset;
+      const diff   = t - offset;
 
       if (0 < diff && diff < 100) {
         sample.play(diff / 1000);
