@@ -59,8 +59,9 @@ const cyroModel = (actions) => {
 
   const stateForLoop$ = notesAndLoop$.withLatestFrom(
     intervalAndTimestamp$,
-    ([notes], [interval, startTime]) => ({
-      notes, interval, startTime,
+    actions.setLoopCount$,
+    ([notes], [interval, startTime], loops) => ({
+      notes, interval, startTime, loops
     })
   );
 

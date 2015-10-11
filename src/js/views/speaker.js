@@ -39,7 +39,7 @@ const play = (timestamp) => {
 };
 requestAnimationFrame(play);
 
-export default function speaker ({ interval, startTime, notes, loops }) {
+export default function speaker ({ interval, startTime, notes }) {
   state.interval  = interval;
   state.startTime = startTime;
   state.notes     = notes;
