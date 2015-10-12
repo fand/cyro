@@ -40,8 +40,6 @@ const cyroModel = (actions) => {
     })
   );
 
-  // stateForLoop$.subscribe(s => console.log(s.notes.length));
-
   return stateForLoop$;
 };
 

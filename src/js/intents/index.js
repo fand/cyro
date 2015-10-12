@@ -27,7 +27,7 @@ const noteIntents = () => {
   const shiftOn$  = keydown$.filter(k => k === 'Shift').map(true);
   const shiftOff$ = keyup$.filter(k => k === 'Shift').map(false);
 
-  const isResetMode$ = shiftOn$.merge(shiftOff$);
+  const isResetMode$ = shiftOn$.merge(shiftOff$).startWith(false);
 
   const addNote$   = requestAddNote$.pausable(isResetMode$.map(x => !x));
   const resetNote$ = requestAddNote$.pausable(isResetMode$);
