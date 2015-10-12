@@ -29,8 +29,8 @@ const draw = (timestamp) => {
     const n = nu[j];
     for (let i = 0; i < state.notes[key].length; i++) {
       const offset = -state.notes[key][i] / 64 * W;
-      ctx.fillRect(x + offset + n, j * 200, 20, 200);
-      ctx.fillRect(x + offset + n + W * state.loops - 10, j * 200, 20, 200);
+      ctx.fillRect(x + offset + n, j * 20, 20, 20);
+      ctx.fillRect(x + offset + n + W * state.loops - 10, j * 20, 20, 20);
     }
   });
 
