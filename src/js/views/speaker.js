@@ -6,7 +6,6 @@ const keys = `
   A S D F G H J K L
   Z X C V B N M
 `.trim().split(/\s*/);
-console.log(keys);
 const sounds = {};
 keys.forEach((key) => {
   sounds[key] = new Sample(`./wav/${key}.wav`);

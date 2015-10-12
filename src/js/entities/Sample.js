@@ -14,6 +14,7 @@ class Sample extends EventEmitter {
   }
 
   play (time = 0) {
+    if (!this.buffer) { return; }
     if (this.node) { this.node.stop(0); }
     this.node = ctx.createBufferSource();
     this.node.buffer = this.buffer;
