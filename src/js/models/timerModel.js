@@ -33,7 +33,7 @@ const timerModel = (actions) => {
       loopIndex = 0;
     });
 
-    return Rx.Observable.fromEvent(eventEmitter, 'loop').startWith(1);
+    return Rx.Observable.fromEvent(eventEmitter, 'loop').startWith(0);
   })();
 
   // Set timestamp only on loop start

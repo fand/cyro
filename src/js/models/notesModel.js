@@ -40,7 +40,7 @@ const notesModel = (actions) => {
 
   timestamp$.subscribe(() => notesEmitter.emit('change', notes));
 
-  const notes$ = Rx.Observable.fromEvent(notesEmitter, 'change');
+  const notes$ = Rx.Observable.fromEvent(notesEmitter, 'change').startWith(notes);
 
   return {
     notes$,
