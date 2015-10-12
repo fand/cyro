@@ -13,6 +13,10 @@ const cyroModel = (actions) => {
     timestamp$,
   );
 
+  let notes = {};
+
+  const notesEmitter = new EventEmitter();
+
   const note$ = actions.addNote$
     .withLatestFrom(intervalAndTimestamp$, (key, [interval, timestamp]) => {
       return [
@@ -21,21 +25,29 @@ const cyroModel = (actions) => {
       ];
     }).startWith([]);
 
-  const notes$ = note$.scan((prev, [key, pos]) => {
-    return {
-      ...prev,
-      [key] : prev[key] ? prev[key].concat(pos) : [pos],
+  note$.subscribe(([key, pos]) => {
+    notes = {
+      ...notes,
+      [key] : notes[key] ? notes[key].concat(pos) : [pos],
     };
-  }).startWith({});
+    notesEmitter.emit('change', notes);
+  });
 
-  actions.resetNote$.subscribe(x => console.log('>>reset : ', x));
+  actions.resetNote$.subscribe((key) => {
+    notes[key] = [];
+    notesEmitter.emit('change', notes);
+  });
 
-  const notesAndLoop$ = Rx.Observable.combineLatest(notes$, loop$);
+  timestamp$.subscribe(() => notesEmitter.emit('change', notes));
 
-  const stateForLoop$ = notesAndLoop$.withLatestFrom(
-    intervalAndTimestamp$,
+  const notes$ = Rx.Observable.fromEvent(notesEmitter, 'change');
+
+  const stateForLoop$ = Rx.Observable.combineLatest(
+    timestamp$,
+    interval$,
+    notes$,
     actions.setLoopCount$,
-    ([notes], [interval, startTime], loops) => ({
+    (startTime, interval, notes, loops) => ({
       notes, interval, startTime, loops
     })
   );

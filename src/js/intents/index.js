@@ -1,7 +1,5 @@
 import { keydown$, keyup$ } from '../utils/keyStream';
 
-// keydown$.subscribe(::console.log);
-
 const configIntents = (DOM) => {
   const incrementLoops$ = DOM.select('.LoopCount__Increment').events('click')
     .map(1).startWith(1);
