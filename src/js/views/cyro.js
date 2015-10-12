@@ -21,7 +21,6 @@ const state = {
 const draw = (timestamp) => {
   const t = (timestamp - state.startTime) / state.interval;
   const x = t * W;
-
   ctx.clearRect(0, 0, W, H);
   ctx.fillStyle = '#000000';
 

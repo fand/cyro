@@ -8,8 +8,6 @@ const main = function ({ DOM }) {
   const actions = intents(DOM);
   const state$  = models(actions);
 
-  // state$.subscribe(s => console.log(s));
-
   return {
     DOM : views(state$),
   };

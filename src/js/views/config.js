@@ -11,7 +11,6 @@ import loopCount from './loopCount';
  */
 const config = ({ isVisible, bpm, loops }) => {
   const suffix = isVisible ? '' : '--hidden';
-
   return (
     <div className={`Config${suffix}`}>
       {bpmSlider(bpm)}
