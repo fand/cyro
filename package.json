@@ -5,21 +5,22 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "http-server public",
-    "clean": "rm -rf public/js public/css && mkdir public/js public/css",
-    "build": "npm run clean && npm run build-js && npm run build-css",
-    "build-js": "$(npm bin)/browserify -t [ babelify --stage 0 ] src/js/index.js -o public/js/index.js",
-    "build-css": "$(npm bin)/node-sass -r src/css/index.scss public/css/index.css",
-    "watch": "npm run clean && npm run watch-js & npm run watch-css & npm run serve",
-    "watch-js": "$(npm bin)/watchify -t [ babelify --stage 0 ] src/js/index.js -o public/js/index.js",
-    "watch-css": "npm run build-css && $(npm bin)/node-sass -w -r src/css/index.scss public/css/index.css"
+    "serve": "http-server docs",
+    "clean": "rm -rf docs/js docs/css && mkdir docs/js docs/css",
+    "build": "npm-run-all -s clean -p build-js build-css",
+    "build-js": "browserify -t [ babelify --stage 0 ] src/js/index.js -o docs/js/index.js",
+    "build-css": "node-sass -r src/css/index.scss docs/css/index.css",
+    "watch": "npm-run-all -s clean -p watch-js watch-css serve",
+    "watch-js": "watchify -t [ babelify --stage 0 ] src/js/index.js -o docs/js/index.js",
+    "watch-css": "npm run build-css && node-sass -w -r src/css/index.scss docs/css/index.css"
   },
   "author": "fand",
   "license": "MIT",
   "dependencies": {
     "@cycle/core": "^3.1.0",
     "@cycle/dom": "^5.3.0",
-    "key-string": "0.0.2"
+    "key-string": "0.0.2",
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
     "babel-eslint": "^4.1.3",

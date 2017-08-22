@@ -1,7 +1,10 @@
 /** @jsx hJSX */
+const _ = require('lodash');
 
-const W = 1000;
-const H = 1000;
+const W = window.innerWidth;
+const H = window.innerHeight;
+let h = window.innerHeight / 26;
+window.addEventListener('resize', _.throttle(() => { h = window.innerHeight / 26; }), 100);
 
 const canvas = document.createElement('canvas');
 canvas.setAttribute('width',  W);
@@ -21,16 +24,17 @@ const state = {
 const draw = (timestamp) => {
   const t = (timestamp - state.startTime) / state.interval;
   const x = t * W;
+  console.log(W, H);
   ctx.clearRect(0, 0, W, H);
   ctx.fillStyle = '#000000';
 
   const nu = [0, 3, 5, -2, 7, 11, 8];
   Object.keys(state.notes).forEach((key, j) => {
-    const n = nu[j];
+    const n = nu[j % nu.length];
     for (let i = 0; i < state.notes[key].length; i++) {
       const offset = -state.notes[key][i] / 64 * W;
-      ctx.fillRect(x + offset + n, j * 20, 20, 20);
-      ctx.fillRect(x + offset + n + W * state.loops - 10, j * 20, 20, 20);
+      ctx.fillRect(x + offset + n, j * h, 20, h);
+      ctx.fillRect(x + offset + n + W * state.loops - 10, j * h, 20, h);
     }
   });
 

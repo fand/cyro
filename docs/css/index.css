@@ -1,0 +1,73 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-user-select: none; }
+
+.Config {
+  position: fixed;
+  width: 90%;
+  height: 210px;
+  top: 50%;
+  left: 5%;
+  margin-top: -105px;
+  background: black;
+  opacity: 0.9;
+  z-index: 10; }
+  .Config--hidden {
+    display: none; }
+
+.BPMSlider {
+  position: relative;
+  height: 90px;
+  width: 96%;
+  margin: 10px auto; }
+  .BPMSlider__Label {
+    position: absolute;
+    left: 0;
+    width: 140px;
+    height: 100%;
+    line-height: 90px;
+    vertical-align: middle;
+    color: white; }
+  .BPMSlider__Input {
+    position: absolute;
+    left: 140px;
+    width: calc(100% - 140px);
+    height: 100%; }
+
+.LoopCount {
+  position: relative;
+  height: 90px;
+  width: 96%;
+  margin: 10px auto;
+  line-height: 90px;
+  color: white;
+  vertical-align: middle; }
+  .LoopCount__Label {
+    display: inline-block;
+    width: 140px; }
+  .LoopCount__Count {
+    display: inline-block;
+    width: 40px;
+    text-align: center; }
+  .LoopCount__Increment, .LoopCount__Decrement {
+    display: inline-block;
+    width: 22px;
+    text-align: center;
+    font-size: 20px;
+    cursor: pointer; }
+
+.Cyro {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%; }
+
+.Clicker {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2; }
